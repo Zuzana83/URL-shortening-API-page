@@ -63,8 +63,16 @@ const displayNewLink = (originalURL, shortURL) => {
 }
 
 const init = () => {
-    // Load links from local storage
-    linksArray = JSON.parse(localStorage.getItem("links")) || [];
+    try {
+        // Load links from local storage
+        linksArray = JSON.parse(localStorage.getItem("links")) || [];
+    } catch (error) {
+        console.error("Failed to parse LS data", error);
+        linksArray = [];
+        // Cleaning incorrect data
+        localStorage.removeItem("links")
+    }
+    
     for(const link of linksArray) {
         const {original, short} = link;
         displayNewLink(original, short);

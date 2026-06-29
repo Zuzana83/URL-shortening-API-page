@@ -81,6 +81,9 @@ const hideError = () => {
     errMsgEl.classList.remove("show");
 }
 
+// NOTE: TinyURL API used instead of Clean URI due to CORS restrictions
+// Clean URI blocks browser requests from localhost/non-whitelisted domains
+// TinyURL provides same functionality without CORS issues
 const shortenURL = async (url) => {
      try {
         const resp = await fetch(`https://tinyurl.com/api-create.php?url=${encodeURIComponent(url)}`);

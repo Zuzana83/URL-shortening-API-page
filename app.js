@@ -3,6 +3,7 @@ const pageNavEl = document.querySelector(".page-navigation");
 const navListEl = document.querySelector(".navigation-list");
 const formEl = document.getElementById("shortenLinkForm");
 const formInputEl = document.getElementById("addressInput");
+const submitBtnEl = document.getElementById("submitBtn");
 const errMsgEl = document.querySelector(".error-msg");
 const linksContainerEl = document.querySelector(".links-container");
 
@@ -98,7 +99,7 @@ const shortenURL = async (url) => {
 
 const handleSubmit = async(e) => {
     e.preventDefault();
-    formEl.submitBtn.disable = true;
+    
     const url = formInputEl.value.trim();
 
     if(!url) {
@@ -106,6 +107,9 @@ const handleSubmit = async(e) => {
         return;
     }
 
+    if(submitBtnEl) submitBtnEl.disabled = true;
+
+    try {
     const shortURL = await shortenURL(url);
     if(!shortURL) return;
 
@@ -116,7 +120,11 @@ const handleSubmit = async(e) => {
     displayNewLink(url, shortURL);
 
     formInputEl.value = "";
-    formEl.submitBtn.disable = false;
+    // this will ensure button re-enables even if API call fails
+    } finally {
+        submitBtnEl.disabled = false;
+    }
+
 }
 
 if(formEl) {

@@ -28,3 +28,7 @@ formData.append("url", url);
     //             <button type="button" class="copy-link-btn">Copy</button>
     //         </div>
     //     </li>`)
+
+// NOTE: TinyURL API used instead of Clean URI due to CORS restrictions
+// Clean URI blocks browser requests from localhost/non-whitelisted domains
+// TinyURL provides same functionality without CORS issues

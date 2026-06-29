@@ -70,7 +70,7 @@ const init = () => {
         console.error("Failed to parse LS data", error);
         linksArray = [];
         // Cleaning incorrect data
-        localStorage.removeItem("links")
+        localStorage.removeItem("links");
     }
     
     for(const link of linksArray) {
@@ -97,7 +97,7 @@ const shortenURL = async (url) => {
         const resp = await fetch(`https://tinyurl.com/api-create.php?url=${encodeURIComponent(url)}`);
 
         if(!resp.ok) {
-            throw new Error("Request failed")
+            throw new Error("Request failed");
         };
 
         const shortUrl = await resp.text(); 
@@ -105,6 +105,7 @@ const shortenURL = async (url) => {
 
     } catch(error) {
         console.error(error);
+        throw error;
     }
 }
 
@@ -131,8 +132,11 @@ const handleSubmit = async(e) => {
     displayNewLink(url, shortURL);
 
     formInputEl.value = "";
-    // this will ensure button re-enables even if API call fails
+    
+    } catch (error) {
+        errMsgEl.textContent = "Failed to shorten URL. Try again later!"
     } finally {
+        // this will ensure button re-enables even if API call fails
         submitBtnEl.disabled = false;
     }
 

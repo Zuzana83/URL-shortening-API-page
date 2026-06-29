@@ -40,7 +40,24 @@ window.addEventListener("click", function(e) {
     if(!pageNavEl.classList.contains("open")) return;
     const isInsideNav = pageNavEl.contains(e.target) || menuToggleBtnEl.contains(e.target);
     if(!isInsideNav) closeMenu();
-})
+});
+
+const copyToClipboard = async(text) => {
+    try {
+        await navigator.clipboard.writeText(text);
+    } catch (error) {
+        // For older browser and security issues
+        const textareaEl = document.createElement("textarea");
+        textareaEl.value = text;
+        textareaEl.style.position = "fixed";
+        textareaEl.style.opacity = "0";
+        document.body.appendChild(textareaEl);
+        textareaEl.select();
+        // this is deprecated but serves as fallback
+        document.execCommand("copy");
+        document.body.removeChild(textareaEl);
+    }
+}
 
 const displayNewLink = (originalURL, shortURL) => {
     const li = document.createElement("li");
@@ -134,7 +151,7 @@ const handleSubmit = async(e) => {
     formInputEl.value = "";
     
     } catch (error) {
-        errMsgEl.textContent = "Failed to shorten URL. Try again later!"
+        errMsgEl.textContent = "Failed to shorten URL. Try again later."
     } finally {
         // this will ensure button re-enables even if API call fails
         submitBtnEl.disabled = false;
@@ -157,7 +174,7 @@ if(linksContainerEl) {
 
         const shortLinkURL = copyBtn.previousElementSibling.textContent;
         // Copy to clipboard
-        await navigator.clipboard.writeText(shortLinkURL);
+        await copyToClipboard(shortLinkURL);
 
         // Change copy button styling and return to its original state after 3s
         copyBtn.classList.add("copy-link-btn-active");

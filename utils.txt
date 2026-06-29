@@ -1,0 +1,30 @@
+const clean_URI_API = "https://cleanuri.com/api/v1/shorten";
+
+const formData = new FormData();
+formData.append("url", url);
+
+ // try {
+    //     const resp = await fetch(`https://corsproxy.io/?${clean_URI_API}`, {
+    //         method: "POST",
+    //         body: formData,
+    //     });
+
+    //     if(!resp.ok) {
+    //         throw new Error("Request Failed!");
+    //     }
+    //     const data = await resp.json();
+    //     return data.result_url;
+
+    // } catch (error) {
+    //     console.error(error);
+    // }
+
+
+// linksContainerEl.insertAdjacentHTML("afterbegin", 
+    //     `<li class="link-item">
+    //         <p class="original-link">${originalURL}</p>
+    //         <div class="shorter-version">
+    //             <p>${shortURL}</p>
+    //             <button type="button" class="copy-link-btn">Copy</button>
+    //         </div>
+    //     </li>`)
